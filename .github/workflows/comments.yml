@@ -13,6 +13,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '15'
+
+      - name: Install dependencies
+        run: npm install @actions/core@^1.2.4 @actions/github@^5.2.0 fs@0.0.1-security
+
       - name: Comment on commit
         uses: Discord-dataminings/pomelo-comment-action@main
         env:
