@@ -55,10 +55,10 @@ async function run() {
     // Generate the markdown comment
     let comment = `# Pomelo usernames taken list:\n\n`;
     if (addedUsernames.length > 0) {
-      comment += `## Added:\n\`\`\`diff\n${addedUsernames.map(username => `+ ${username}`).join('\n')}\n\`\`\`\n`;
+      comment += `## Added:\n\`\`\`diff\n${addedUsernames.map(username => `${username}`).join('\n')}\n\`\`\`\n`;
     }
     if (removedUsernames.length > 0) {
-      comment += `## Removed:\n\`\`\`diff\n${removedUsernames.map(username => `- ${username}`).join('\n')}\n\`\`\`\n`;
+      comment += `## Removed:\n\`\`\`diff\n${removedUsernames.map(username => `${username}`).join('\n')}\n\`\`\`\n`;
     }
 
     // Create a comment on the commit
