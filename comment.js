@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
+const fs = require('fs');
 
 async function run() {
   try {
@@ -24,11 +25,13 @@ async function run() {
     const removedUsernames = [];
 
     for (const file of diffData.files) {
-      const { patch } = await octokit.repos.getCommit({
+      const { data: fileDiffData } = await octokit.repos.getCommit({
         owner,
         repo,
         ref: commitSha
       });
+
+      const patch = fileDiffData.files.find(f => f.filename === file.filename).patch;
 
       const lines = patch.split('\n');
 
