@@ -43,11 +43,11 @@ async function run() {
 
     const lines = patch.split('\n');
     for (const line of lines) {
-      if (line.startsWith('+') && line.includes('username')) {
-        const username = line.split('username')[1].trim();
+      if (line.startsWith('+')) {
+        const username = line;
         addedUsernames.push(username);
-      } else if (line.startsWith('-') && line.includes('username')) {
-        const username = line.split('username')[1].trim();
+      } else if (line.startsWith('-')) {
+        const username = line;
         removedUsernames.push(username);
       }
     }
