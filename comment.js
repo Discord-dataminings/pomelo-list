@@ -14,7 +14,7 @@ async function run() {
     const { repo, owner } = github.context.repo;
 
     // Get the commit diff
-    const { data: diffData } = await octokit.repos.getCommit({
+    const { data: commit } = await octokit.rest.repos.getCommit({
       owner,
       repo,
       ref: commitSha
@@ -24,23 +24,23 @@ async function run() {
     const addedUsernames = [];
     const removedUsernames = [];
 
-    for (const file of diffData.files) {
-      const { data: fileDiffData } = await octokit.repos.getCommit({
+    for (const file of commit.files) {
+      const { data: fileDiff } = await octokit.rest.repos.getCommit({
         owner,
         repo,
         ref: commitSha
       });
 
-      const patch = fileDiffData.files.find(f => f.filename === file.filename).patch;
+      const patch = fileDiff.files.find(f => f.filename === file.filename).patch;
 
       const lines = patch.split('\n');
 
       for (const line of lines) {
-        if (line.startsWith('+') && line.includes('username')) {
-          const username = line.split('username')[1].trim();
+        if (line.startsWith('+')) {
+          const username = line;
           addedUsernames.push(username);
-        } else if (line.startsWith('-') && line.includes('username')) {
-          const username = line.split('username')[1].trim();
+        } else if (line.startsWith('-')) {
+          const username = line;
           removedUsernames.push(username);
         }
       }
@@ -60,7 +60,7 @@ async function run() {
     }
 
     // Create a comment in the repository
-    await octokit.issues.createComment({
+    await octokit.rest.issues.createComment({
       owner,
       repo,
       issue_number: github.context.issue.number,
