@@ -6,6 +6,7 @@ spltmlk.
 aeterna_official
 lamechial
 misterbuz
+openai
 ay2k
 cmazey
 troyy_
